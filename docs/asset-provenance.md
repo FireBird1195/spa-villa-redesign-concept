@@ -15,6 +15,6 @@ The sandbox could not download the CDN directly (network policy), so the images 
 | tray-* | gallery `696f2354…` | |
 | award-640 | gallery `681b5211…` | "Best Spa in Nagpur, Times Business Awards" |
 | s-* (320 px) | gallery `681b53…`/`681b54…` | Low resolution at source. Shown small on purpose |
-| brand/logo-*, mark-* | gallery `68039063…` (logo on black) | Background removed and recoloured for light and dark use. Ask for the vector logo |
+| brand/logo.png, brand/mark.png | gallery `68039063…` (logo on black) | Spa Villa's own stacked logo (lotus + SPA VILLA wordmark). Only the black background was removed; the original gold and rose-gold tones and proportions are unchanged. It's used in the header and footer exactly as it appears on their site and posters. `mark.png` (lotus only) is used only as the browser-tab icon. Ask for the vector logo |
 
 Not used: promotional posters (stock models, text baked in), celebrity-visit posters, and photos of identifiable guests or staff.

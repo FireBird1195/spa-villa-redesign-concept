@@ -416,3 +416,7 @@ table.ct tbody th { font: 400 .72rem var(--label); letter-spacing: .14em; text-t
   body { padding-bottom: 4.5rem; }
   .tray-bar { bottom: 5rem; }
 }
+/* Brand: Spa Villa's own stacked logo, original colours */
+.brand img { width: auto; height: 58px; }
+@media (max-width: 820px) { .brand img { width: auto; height: 50px; } }
+.foot img { width: 170px; }
