@@ -1,0 +1,5 @@
+node_modules/
+.DS_Store
+qa/screens/
+# Business-owned photos/logo: keep out of git until permission is confirmed
+assets/brand-private/
