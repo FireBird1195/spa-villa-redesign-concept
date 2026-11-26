@@ -9,11 +9,11 @@
 ## Run
 No build step. `python3 -m http.server 8080` in this folder, then http://localhost:8080
 
-## Deploy (Cloudflare Pages), only after the asset permission below is confirmed
+## Deploy (Cloudflare Pages)
 Preset *None*, no build command, output directory `/`. `_headers` sets `X-Robots-Tag: noindex`, a CSP and caching. Every page also carries meta `noindex`, and `robots.txt` disallows all crawlers.
 
 ## Assets and permission
-`assets/photos/` and `assets/brand/` are **Spa Villa's own logo and photographs**, taken from spavillanagpur.com for this demonstration (see `docs/asset-provenance.md`). **Do not push this to a public repository or publish a public preview until Spa Villa or the project owner confirms permission.** Fonts are Newsreader, Hanken Grotesk and Marcellus (SIL OFL), self-hosted.
+`assets/photos/` and `assets/brand/` are **Spa Villa's own logo and photographs**, taken from spavillanagpur.com for this demonstration (see `docs/asset-provenance.md`). The project owner has confirmed permission to use these assets in this concept (Nov 26, 2026). Fonts are Newsreader, Hanken Grotesk and Marcellus (SIL OFL), self-hosted.
 
 ## Privacy
 Nothing is sent or stored. The planner only builds text. The visitor chooses whether to open WhatsApp or call.
