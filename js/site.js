@@ -13,7 +13,9 @@
   const header = $('.site-header');
   const setHdr = () => document.documentElement.style.setProperty('--hdr', header.getBoundingClientRect().bottom + 'px');
   const onScroll = () => { header.classList.toggle('solid', scrollY > 40); };
-  addEventListener('scroll', onScroll, { passive: true }); onScroll();
+  const callbar = $('#callbar');
+  const onScroll2 = () => { if (callbar) callbar.classList.toggle('show', scrollY > innerHeight * 0.6); };
+  addEventListener('scroll', () => { onScroll(); onScroll2(); }, { passive: true }); onScroll(); onScroll2();
 
   // Mobile nav
   const btn = $('.menu-btn'), nav = $('#nav');

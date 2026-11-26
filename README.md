@@ -9,8 +9,10 @@
 ## Run
 No build step. `python3 -m http.server 8080` in this folder, then http://localhost:8080
 
-## Deploy (Cloudflare Pages)
-Preset *None*, no build command, output directory `/`. `_headers` sets `X-Robots-Tag: noindex`, a CSP and caching. Every page also carries meta `noindex`, and `robots.txt` disallows all crawlers.
+## Deploy (GitHub Pages)
+Live preview: https://firebird1195.github.io/spa-villa-redesign-concept/
+
+In the repo, go to Settings → Pages → Source: *Deploy from a branch* → `main` / `(root)`. All paths are relative, so the `/spa-villa-redesign-concept/` sub-path works as-is. `.nojekyll` turns off Jekyll processing. Every page carries `noindex`, and `robots.txt` disallows crawlers. (GitHub Pages ignores `_headers`, which is kept for Cloudflare Pages if you move hosts.)
 
 ## Assets and permission
 `assets/photos/` and `assets/brand/` are **Spa Villa's own logo and photographs**, taken from spavillanagpur.com for this demonstration (see `docs/asset-provenance.md`). The project owner has confirmed permission to use these assets in this concept (Nov 26, 2026). Fonts are Newsreader, Hanken Grotesk and Marcellus (SIL OFL), self-hosted.
