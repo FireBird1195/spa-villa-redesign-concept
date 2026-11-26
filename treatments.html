@@ -3,167 +3,241 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Treatments and prices — Spa Villa, Nagpur (independent concept)</title>
-<meta name="description" content="The Spa Villa menu in one place: signature, couple, full-body and express massages with duration and price. Independent concept.">
+<title>Treatments and prices — Spa Villa, Nagpur (concept)</title>
+<meta name="description" content="Every Spa Villa treatment with its price and duration: Antaara signature, synchronised and couple experiences, full-body massages and a 30-minute express. Independent redesign concept.">
 <meta name="robots" content="noindex, nofollow">
-<meta name="theme-color" content="#f4efe7">
-<link rel="icon" href="assets/img/favicon.svg" type="image/svg+xml">
+<meta name="theme-color" content="#211a15">
+<link rel="icon" href="assets/brand/mark-champagne.png" type="image/png">
 <link rel="preload" href="assets/fonts/newsreader-latin-opsz-normal.woff2" as="font" type="font/woff2" crossorigin>
 <link rel="stylesheet" href="css/site.css">
 <script>document.documentElement.classList.add('js')</script>
 </head>
-<body>
+<body class="page-light">
 <a class="skip" href="#main">Skip to content</a>
-<aside class="concept-bar" aria-label="Concept notice">Independent design concept — not the official Spa Villa website, and not commissioned or endorsed by Spa Villa.</aside>
+<aside class="notice" aria-label="Concept notice">Independent design concept. Not the official Spa Villa website, and not commissioned or endorsed by Spa Villa.</aside>
 
-<header class="site-header">
+<header class="site-header" id="top">
   <div class="wrap">
-    <a class="wordmark" href="./">Spa Villa<small>Nagpur</small></a>
-    <button class="nav-toggle" aria-expanded="false" aria-controls="nav">Menu</button>
+    <a class="brand" href="./"><img src="assets/brand/mark-champagne.png" width="175" height="99" alt=""><span>Spa Villa<small>Nagpur</small></span></a>
+    <button class="menu-btn" aria-expanded="false" aria-controls="nav">Menu</button>
     <nav class="nav" id="nav" aria-label="Main">
       <ul>
         <li><a href="treatments.html" aria-current="page">Treatments</a></li>
-        <li><a href="./#visit">Your visit</a></li>
+        <li><a href="./#inside">The villa</a></li>
         <li><a href="./#branches">Branches</a></li>
-        <li><a class="btn" href="./#enquire">Enquire</a></li>
+        <li><a class="cta" href="./#plan">Plan a visit</a></li>
       </ul>
     </nav>
   </div>
 </header>
 
 <main id="main">
-  <header class="page-head">
+  <section class="t-hero" aria-labelledby="h1">
+    <picture>
+      <source type="image/webp" srcset="assets/photos/towels-800.webp 800w, assets/photos/towels-1600.webp 1600w" sizes="100vw">
+      <img src="assets/photos/towels-800.jpg" srcset="assets/photos/towels-800.jpg 800w, assets/photos/towels-1600.jpg 1600w" sizes="100vw" width="1600" height="667" alt="" fetchpriority="high">
+    </picture>
     <div class="wrap">
-      <p class="tag"><b>The menu</b> · 8 treatments</p>
-      <h1>Treatments, with the time and price on the page.</h1>
-      <p>Filter by occasion, sort by price or length, and set up to three side by side.</p>
+      <p class="label" style="color:var(--champagne-2)">The menu · 8 treatments</p>
+      <h1 id="h1">Every treatment, priced and timed.</h1>
+      <p class="lede">Tell us how long you have and who's coming, and the list narrows to what fits. Then compare up to three side by side.</p>
     </div>
-  </header>
+  </section>
 
-  <div class="toolbar">
+  <div class="finder" role="search" aria-label="Find a treatment">
     <div class="wrap">
-      <div class="filters" role="group" aria-label="Filter treatments">
-        <button type="button" aria-pressed="true" data-filter="all">All</button>
-        <button type="button" aria-pressed="false" data-filter="signature">Signature</button>
-        <button type="button" aria-pressed="false" data-filter="for-two">For two</button>
-        <button type="button" aria-pressed="false" data-filter="full-body">Full body</button>
-        <button type="button" aria-pressed="false" data-filter="express">Express</button>
-      </div>
-      <label class="sort" for="sort">Sort
+      <fieldset>
+        <legend>Time</legend>
+        <div class="seg">
+          <label><input type="radio" name="time" value="any" checked><span>Any</span></label>
+          <label><input type="radio" name="time" value="30"><span>30 min</span></label>
+          <label><input type="radio" name="time" value="60"><span>An hour</span></label>
+        </div>
+      </fieldset>
+      <fieldset>
+        <legend>Who</legend>
+        <div class="seg">
+          <label><input type="radio" name="who" value="any" checked><span>Anyone</span></label>
+          <label><input type="radio" name="who" value="one"><span>Just me</span></label>
+          <label><input type="radio" name="who" value="two"><span>For two</span></label>
+        </div>
+      </fieldset>
+      <label class="sortf" for="sort">Sort
         <select id="sort">
-          <option value="menu">Menu order</option>
-          <option value="price-asc">Price, low to high</option>
-          <option value="price-desc">Price, high to low</option>
-          <option value="dur-asc">Shortest first</option>
+          <option value="menu">Recommended</option>
+          <option value="lo">Price: low to high</option>
+          <option value="hi">Price: high to low</option>
         </select>
       </label>
     </div>
   </div>
 
   <div class="wrap">
-    <p class="visually-hidden" aria-live="polite" id="count"></p>
-    <ol class="menu" id="menu">
-      <li class="treat" id="signature" data-cat="signature" data-price="5500" data-dur="60" data-order="1" data-name="Antaara signature massage">
-        <div><span class="tag cat">Signature</span><h2>Antaara signature massage</h2></div>
-        <div class="body">
-          <p>The fullest ritual on the menu: a facial and scalp massage, a body scrub and wrap, then a slow full-body massage with the therapy oil of your choice.</p>
-          <ul class="facts"><li>Facial</li><li>Scalp massage</li><li>Scrub &amp; wrap</li><li>Choice of oil</li><li>One guest</li></ul>
+    <p class="result-count" id="rc" aria-live="polite">Showing all 8 treatments</p>
+    <ol class="tlist" id="tlist">
+      <li class="tr" id="antaara" data-time="60" data-who="one" data-price="5500" data-o="1">
+        <div><picture><source type="image/webp" srcset="assets/photos/tray-600.webp"><img src="assets/photos/tray-600.jpg" width="600" height="900" loading="lazy" alt=""></picture></div>
+        <div>
+          <span class="kind">Signature · one guest</span>
+          <h2>Antaara signature massage</h2>
+          <p class="desc">The fullest ritual on the menu: a facial and scalp massage, a body scrub and wrap, then a slow full-body massage in the therapy oil of your choice.</p>
+          <ul class="chips"><li>Facial</li><li>Scalp massage</li><li>Scrub &amp; wrap</li><li>Choice of oil</li></ul>
         </div>
-        <div class="side"><span class="price">₹5,500</span><span class="dur">60 min</span><a class="btn" href="./#enquire" data-prefill="Antaara signature massage">Ask about this</a><label class="compare-toggle"><input type="checkbox" data-compare> Compare</label></div>
+        <div class="side">
+          <span class="price">₹5,500</span>
+          <span class="dur"><i style="--w:100%"></i>60 min</span>
+          <a class="btn btn-dark" href="./?t=Antaara%20signature%20massage#plan">Plan this visit</a>
+          <label class="cmp-tg"><input type="checkbox" data-cmp> Compare</label>
+        </div>
       </li>
-      <li class="treat" id="for-two" data-cat="for-two" data-price="5499" data-dur="60" data-order="2" data-name="Synchronised massage">
-        <div><span class="tag cat">For two · four hands</span><h2>Synchronised massage</h2></div>
-        <div class="body">
-          <p>Two therapists, one guest. Strokes are mirrored on both sides of the body at the same moment. Oil-based, so wear clothes you don’t mind getting oil on.</p>
-          <ul class="facts"><li>Two therapists</li><li>Oil-based</li><li>One guest</li></ul>
+      <li class="tr" data-time="60" data-who="two" data-price="5499" data-o="2">
+        <div><picture><source type="image/webp" srcset="assets/photos/s-room-a-320.webp"><img src="assets/photos/s-room-a-320.jpg" width="320" height="213" loading="lazy" alt=""></picture></div>
+        <div>
+          <span class="kind">For two · four hands</span>
+          <h2>Synchronised massage</h2>
+          <p class="desc">Two therapists, one guest. Strokes are mirrored on both sides of the body at the same moment. It's an oil massage, so wear clothes you don't mind getting oil on.</p>
+          <ul class="chips"><li>Two therapists</li><li>Oil massage</li></ul>
         </div>
-        <div class="side"><span class="price">₹5,499</span><span class="dur">60 min</span><a class="btn" href="./#enquire" data-prefill="Synchronised massage">Ask about this</a><label class="compare-toggle"><input type="checkbox" data-compare> Compare</label></div>
+        <div class="side">
+          <span class="price">₹5,499</span>
+          <span class="dur"><i style="--w:100%"></i>60 min</span>
+          <a class="btn btn-dark" href="./?t=Synchronised%20massage#plan">Plan this visit</a>
+          <label class="cmp-tg"><input type="checkbox" data-cmp> Compare</label>
+        </div>
       </li>
-      <li class="treat" data-cat="for-two" data-price="5400" data-dur="" data-order="3" data-name="Couple spa">
-        <div><span class="tag cat">For two</span><h2>Couple spa</h2></div>
-        <div class="body">
-          <p>Spa therapies for two guests in the same room. A thoughtful gift for a partner, or a shared afternoon for yourselves.</p>
-          <ul class="facts"><li>Two guests</li><li>Gift-friendly</li><li>Inclusions on request</li></ul>
+      <li class="tr" data-time="0" data-who="two" data-price="5400" data-o="3">
+        <div><picture><source type="image/webp" srcset="assets/photos/couple-room-686.webp"><img src="assets/photos/couple-room-686.jpg" width="686" height="915" loading="lazy" alt=""></picture></div>
+        <div>
+          <span class="kind">For two · side by side</span>
+          <h2>Couple spa</h2>
+          <p class="desc">Spa therapies for two guests in the same room. A thoughtful gift for a partner, or a shared afternoon for the two of you.</p>
+          <ul class="chips"><li>Two guests</li><li>Good as a gift</li></ul>
         </div>
-        <div class="side"><span class="price">₹5,400</span><span class="dur">Duration on request</span><a class="btn" href="./#enquire" data-prefill="Couple spa">Ask about this</a><label class="compare-toggle"><input type="checkbox" data-compare> Compare</label></div>
+        <div class="side">
+          <span class="price">₹5,400</span>
+          <span class="dur"><i style="--w:0"></i>Length on request</span>
+          <a class="btn btn-dark" href="./?t=Couple%20spa#plan">Ask what's included</a>
+          <label class="cmp-tg"><input type="checkbox" data-cmp> Compare</label>
+        </div>
       </li>
-      <li class="treat" id="full-body" data-cat="full-body" data-price="2599" data-dur="60" data-order="4" data-name="Swedish massage">
-        <div><span class="tag cat">Full body · lighter to medium</span><h2>Swedish massage</h2></div>
-        <div class="body">
-          <p>The most familiar style of massage: long strokes, circular palm pressure, kneading and light tapping. A good first treatment if you are new to spas.</p>
-          <ul class="facts"><li>Classic technique</li><li>Good first visit</li></ul>
+      <li class="tr" data-time="60" data-who="one" data-price="2599" data-o="4">
+        <div><picture><source type="image/webp" srcset="assets/photos/s-room-b-320.webp"><img src="assets/photos/s-room-b-320.jpg" width="320" height="213" loading="lazy" alt=""></picture></div>
+        <div>
+          <span class="kind">Full body · light to medium</span>
+          <h2>Swedish massage</h2>
+          <p class="desc">The most familiar style of massage: long strokes, circular palm pressure, kneading and light tapping. A good first treatment if you're new to spas.</p>
+          <ul class="chips"><li>Classic technique</li><li>Good first visit</li></ul>
         </div>
-        <div class="side"><span class="price">₹2,599</span><span class="dur">60 min</span><a class="btn" href="./#enquire" data-prefill="Swedish massage">Ask about this</a><label class="compare-toggle"><input type="checkbox" data-compare> Compare</label></div>
+        <div class="side">
+          <span class="price">₹2,599</span>
+          <span class="dur"><i style="--w:100%"></i>60 min</span>
+          <a class="btn btn-dark" href="./?t=Swedish%20massage#plan">Plan this visit</a>
+          <label class="cmp-tg"><input type="checkbox" data-cmp> Compare</label>
+        </div>
       </li>
-      <li class="treat" data-cat="full-body" data-price="2699" data-dur="60" data-order="5" data-name="Abhyanga massage">
-        <div><span class="tag cat">Full body · traditional</span><h2>Abhyanga massage</h2></div>
-        <div class="body">
-          <p>A traditional Indian full-body oil massage with flowing, rhythmic strokes.</p>
-          <ul class="facts"><li>Oil massage</li><li>Rhythmic strokes</li></ul>
+      <li class="tr" data-time="60" data-who="one" data-price="2699" data-o="5">
+        <div><picture><source type="image/webp" srcset="assets/photos/towels-800.webp"><img src="assets/photos/towels-800.jpg" width="800" height="334" loading="lazy" alt=""></picture></div>
+        <div>
+          <span class="kind">Full body · traditional</span>
+          <h2>Abhyanga massage</h2>
+          <p class="desc">A traditional Indian full-body oil massage with long, rhythmic strokes.</p>
+          <ul class="chips"><li>Oil massage</li><li>Rhythmic strokes</li></ul>
         </div>
-        <div class="side"><span class="price">₹2,699</span><span class="dur">60 min</span><a class="btn" href="./#enquire" data-prefill="Abhyanga massage">Ask about this</a><label class="compare-toggle"><input type="checkbox" data-compare> Compare</label></div>
+        <div class="side">
+          <span class="price">₹2,699</span>
+          <span class="dur"><i style="--w:100%"></i>60 min</span>
+          <a class="btn btn-dark" href="./?t=Abhyanga%20massage#plan">Plan this visit</a>
+          <label class="cmp-tg"><input type="checkbox" data-cmp> Compare</label>
+        </div>
       </li>
-      <li class="treat" data-cat="full-body" data-price="2799" data-dur="60" data-order="6" data-name="Deep tissue massage">
-        <div><span class="tag cat">Full body · firm</span><h2>Deep tissue massage</h2></div>
-        <div class="body">
-          <p>Firm pressure and slow strokes that work into the deeper layers of muscle. Choose it if you prefer a strong massage, and tell your therapist where you hold tension.</p>
-          <ul class="facts"><li>Firm pressure</li><li>Slow strokes</li></ul>
+      <li class="tr" data-time="60" data-who="one" data-price="2799" data-o="6">
+        <div><picture><source type="image/webp" srcset="assets/photos/s-couple-suite-320.webp"><img src="assets/photos/s-couple-suite-320.jpg" width="320" height="213" loading="lazy" alt=""></picture></div>
+        <div>
+          <span class="kind">Full body · firm</span>
+          <h2>Deep tissue massage</h2>
+          <p class="desc">Firm pressure and slow strokes that work into the deeper layers of muscle. Choose it if you like a strong massage, and tell your therapist where you hold tension.</p>
+          <ul class="chips"><li>Firm pressure</li><li>Slow strokes</li></ul>
         </div>
-        <div class="side"><span class="price">₹2,799</span><span class="dur">60 min</span><a class="btn" href="./#enquire" data-prefill="Deep tissue massage">Ask about this</a><label class="compare-toggle"><input type="checkbox" data-compare> Compare</label></div>
+        <div class="side">
+          <span class="price">₹2,799</span>
+          <span class="dur"><i style="--w:100%"></i>60 min</span>
+          <a class="btn btn-dark" href="./?t=Deep%20tissue%20massage#plan">Plan this visit</a>
+          <label class="cmp-tg"><input type="checkbox" data-cmp> Compare</label>
+        </div>
       </li>
-      <li class="treat" data-cat="full-body" data-price="2899" data-dur="60" data-order="7" data-name="Balinese massage">
-        <div><span class="tag cat">Full body · medium</span><h2>Balinese massage</h2></div>
-        <div class="body">
-          <p>A full-body massage in the Balinese style, combining stretching, palm and thumb pressure with flowing strokes.</p>
-          <ul class="facts"><li>Stretching</li><li>Palm &amp; thumb pressure</li></ul>
+      <li class="tr" data-time="60" data-who="one" data-price="2899" data-o="7">
+        <div><picture><source type="image/webp" srcset="assets/photos/s-vanity-213.webp"><img src="assets/photos/s-vanity-213.jpg" width="213" height="320" loading="lazy" alt=""></picture></div>
+        <div>
+          <span class="kind">Full body · medium</span>
+          <h2>Balinese massage</h2>
+          <p class="desc">A full-body massage in the Balinese style, combining gentle stretches with palm and thumb pressure.</p>
+          <ul class="chips"><li>Stretching</li><li>Palm &amp; thumb pressure</li></ul>
         </div>
-        <div class="side"><span class="price">₹2,899</span><span class="dur">60 min</span><a class="btn" href="./#enquire" data-prefill="Balinese massage">Ask about this</a><label class="compare-toggle"><input type="checkbox" data-compare> Compare</label></div>
+        <div class="side">
+          <span class="price">₹2,899</span>
+          <span class="dur"><i style="--w:100%"></i>60 min</span>
+          <a class="btn btn-dark" href="./?t=Balinese%20massage#plan">Plan this visit</a>
+          <label class="cmp-tg"><input type="checkbox" data-cmp> Compare</label>
+        </div>
       </li>
-      <li class="treat" id="express" data-cat="express" data-price="1799" data-dur="30" data-order="8" data-name="Back, neck &amp; shoulder massage">
-        <div><span class="tag cat">Express</span><h2>Back, neck &amp; shoulder massage</h2></div>
-        <div class="body">
-          <p>A focused half hour for the places a desk, a drive or a phone leaves tight. Fits into a lunch break.</p>
-          <ul class="facts"><li>Upper body</li><li>30 minutes</li></ul>
+      <li class="tr" data-time="30" data-who="one" data-price="1799" data-o="8">
+        <div><picture><source type="image/webp" srcset="assets/photos/lounge-seating-686.webp"><img src="assets/photos/lounge-seating-686.jpg" width="686" height="514" loading="lazy" alt=""></picture></div>
+        <div>
+          <span class="kind">Express · upper body</span>
+          <h2>Back, neck &amp; shoulder massage</h2>
+          <p class="desc">A focused half hour for the places a desk, a long drive or your phone leaves tight. It fits into a lunch break.</p>
+          <ul class="chips"><li>Upper body</li><li>Lunch-break length</li></ul>
         </div>
-        <div class="side"><span class="price">₹1,799</span><span class="dur">30 min</span><a class="btn" href="./#enquire" data-prefill="Back, neck &amp; shoulder massage">Ask about this</a><label class="compare-toggle"><input type="checkbox" data-compare> Compare</label></div>
+        <div class="side">
+          <span class="price">₹1,799</span>
+          <span class="dur"><i style="--w:50%"></i>30 min</span>
+          <a class="btn btn-dark" href="./?t=Back%2C%20neck%20%26%20shoulder%20massage#plan">Plan this visit</a>
+          <label class="cmp-tg"><input type="checkbox" data-cmp> Compare</label>
+        </div>
       </li>
     </ol>
-    <p class="empty" id="empty" hidden>No treatments match this filter.</p>
+    <p class="none" id="none" hidden>Nothing on the menu matches that combination. Try a different time, or <a class="link" href="./#plan">ask the branch</a>.</p>
   </div>
 
-  <section class="section policy" aria-labelledby="pol-title">
-    <div class="wrap">
-      <div class="section-head">
-        <p class="tag"><b>Good to know</b></p>
-        <h2 id="pol-title">Before you book.</h2>
+  <section class="sec" aria-labelledby="also-h" style="background:var(--cream-2)">
+    <div class="wrap also">
+      <div>
+        <p class="label"><span class="n">+</span>Also mentioned by Spa Villa</p>
+        <h2 id="also-h" style="font-size:var(--s2);margin:1rem 0 1.5rem">Ask the branch about these.</h2>
+        <ul>
+          <li>Facials <span>mentioned on the About page</span></li>
+          <li>Aromatherapy <span>in a booking post</span></li>
+          <li>Thai massage <span>in a booking post</span></li>
+        </ul>
       </div>
-      <div class="policy-grid">
-        <div><h3>Prices</h3><p>Prices shown are as currently published by Spa Villa. Confirm the price and any offer when you book.</p></div>
-        <div><h3>Branch availability</h3><p>Not every treatment may be offered at both branches at all times. Ask when you call.</p></div>
-        <div><h3>Your comfort</h3><p>These are relaxation treatments. If you are pregnant or have a health concern, mention it when booking and check with your doctor first.</p></div>
+      <div class="notes">
+        <h3>Prices</h3><p>Prices are as published by Spa Villa. Confirm the price, and any current offer, when you book.</p>
+        <h3>Which branch</h3><p>Ask your branch whether the treatment you want is available on your day.</p>
+        <h3>Your comfort</h3><p>These are relaxation treatments, not medical care. If you're pregnant or have a health concern, mention it when you book and check with your doctor first.</p>
       </div>
     </div>
   </section>
 </main>
 
-<div class="compare-tray" id="tray" hidden>
-  <span id="tray-count">0 selected</span>
-  <button class="btn" type="button" id="open-compare">Compare</button>
-  <button class="clear" type="button" id="clear-compare">Clear</button>
+<div class="tray-bar" id="traybar" hidden>
+  <span id="trayn">0 selected</span>
+  <button class="btn btn-gold" type="button" id="opencmp">Compare</button>
+  <button class="clear" type="button" id="clearcmp">Clear</button>
 </div>
-<dialog class="compare" id="compare" aria-labelledby="cmp-title">
-  <div class="compare-inner">
-    <div class="compare-head"><h2 id="cmp-title">Side by side</h2><button type="button" id="close-compare">Close</button></div>
-    <div class="table-scroll" id="cmp-body"></div>
+<dialog class="cmp" id="cmp" aria-labelledby="cmp-h">
+  <div class="cmp-in">
+    <div class="cmp-hd"><h2 id="cmp-h">Side by side</h2><button type="button" id="closecmp">Close</button></div>
+    <div class="scroll-x" id="cmpbody"></div>
   </div>
 </dialog>
 
-<footer class="site-footer">
+<footer class="foot">
   <div class="wrap">
-    <div><h2>Spa Villa</h2><p>Plot No. 15, Hill Road, Gandhi Nagar, Dharampeth, Nagpur<br><a href="tel:+919370660101">+91 93706 60101</a></p></div>
-    <div><h2>Explore</h2><ul><li><a href="./">Home</a></li><li><a href="./#visit">Your visit</a></li><li><a href="./#branches">Branches</a></li></ul></div>
-    <div><h2>Elsewhere</h2><ul><li><a href="https://www.spavillanagpur.com/" rel="noopener">Official website</a></li><li><a href="https://www.facebook.com/spavillanagpur/" rel="noopener">Facebook</a></li></ul></div>
-    <p class="disclaimer">This is an independent, unofficial design concept prepared speculatively. It is not the official Spa Villa website and has not been commissioned, reviewed or endorsed by Spa Villa. Prices and details are as published on spavillanagpur.com in November 2026 and may have changed.</p>
+    <div><img src="assets/brand/logo-champagne.png" width="344" height="251" alt="Spa Villa"><p>Wellness, our passion.</p></div>
+    <div><h2>Dharampeth</h2><ul><li>Plot No. 15, Hill Road, Gandhi Nagar</li><li><a href="tel:+917721077210">+91 77210 77210</a></li></ul></div>
+    <div><h2>Chhatrapati Square</h2><ul><li>Wardha Road, Nagpur</li><li><a href="tel:+919370660101">+91 93706 60101</a></li></ul></div>
+    <div><h2>Explore</h2><ul><li><a href="./">Home</a></li><li><a href="./#inside">The villa</a></li><li><a href="mailto:info@spavillanagpur.com">info@spavillanagpur.com</a></li><li><a href="https://www.spavillanagpur.com/" rel="noopener">Official website</a></li></ul></div>
+    <p class="disc">Independent, unofficial design concept, prepared speculatively. Not commissioned, reviewed or endorsed by Spa Villa. Logo and photographs belong to Spa Villa and appear here only to demonstrate the concept. Prices and details are as published by Spa Villa in November 2026 and may have changed.</p>
   </div>
 </footer>
 <script src="js/site.js" defer></script>

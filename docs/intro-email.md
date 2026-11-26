@@ -1,12 +1,12 @@
-**Subject:** A redesign concept for Spa Villa's website
+**Subject:** A website concept for Spa Villa, built around your own photographs
 
 Dear Ms Khushalani,
 
-I'm Tejas, an independent web designer. While looking at spa options in Nagpur, I noticed that spavillanagpur.com still shows the Boost 360 "preview" banner. The booking panel also says no services are available, which is a shame, because your menu is clear and well priced.
+I'm Tejas, an independent web designer in Nagpur. Your interiors are some of the most considered I've seen in the city: the carved petal panels at reception, the marigold urli and the lines of light in the ceiling. Yet on spavillanagpur.com they sit in a gallery behind a "preview" banner, and the booking panel says no services are available.
 
-I've put together a short, unofficial concept for how the site could work. It has two pages: a homepage, and a treatment menu where guests can filter by occasion, compare treatments such as Antaara and the synchronised massage side by side, and choose between Dharampeth and Chhatrapati Square before calling. The visual language takes its cue from your background in architecture: quiet, drawn and precise, rather than the usual spa template.
+I've built an unofficial two-page concept using your own photos, logo and menu. It includes a walk-through of the villa, every treatment with its price and duration, the Times Business Awards recognition up front, and a planner that writes a WhatsApp booking message straight to Dharampeth or Chhatrapati Square.
 
-It is unpublished and uses none of your photographs. I've also listed a few details I would want to confirm with you, such as branch hours and Couple Spa inclusions. Would you be open to a 15-minute look at it this week?
+It isn't published anywhere. I've also noted a few details to confirm, such as branch hours and what the Couple Spa includes. Could I show it to you in 15 minutes this week?
 
 Warm regards,
 Tejas

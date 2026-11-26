@@ -1,24 +1,22 @@
-# Creative direction — "the villa drawing set"
+# Creative direction, iteration 2: "the villa, as it really is"
 
-**Insight.** The live site is a Boost 360 template with a preview banner, Lorem Ipsum offers, a "Hair Color" booking pop-up, an empty booking widget and two different phone numbers. The menu itself is good — eight treatments with clear prices — but a guest cannot tell what a treatment involves, which branch offers it, or how to book. The business also says its director is an architect. That gave the visual idea without needing to state it as a claim.
+Iteration 1 was generic: no photos, an invented "drawing set" motif and stock-template rhythm. Iteration 2 is built entirely from what Spa Villa already owns.
 
-**Language.** The site reads like a calm architect's drawing set: limewash paper (#F4EFE7), tamarind ink (#2A221D), hairline rules, numbered sheets and annotations, an illustrative plan of a room for two in the hero, clay (#9B4A31) for emphasis and sage (#56614F) for the enquiry band. Newsreader (an editorial serif with optical sizes) carries headings and prices; Hanken Grotesk carries labels and body. No black-and-gold, gradients, glass, stock photos or generated imagery.
+- **Photography first.** 16 of Spa Villa's own images: the reception (Buddha, carved petal panels, marigold urli), the night courtyard, the lounge, treatment and couple rooms, the lotus-embroidered towels and the award moment.
+- **Palette taken from the space.** Umber evenings (#211A15), stone-cream walls (#F5EFE6), champagne from the logo and the LED ceiling lines (#CFB98F), and marigold from the petals at the door (#D58A1F), used sparingly.
+- **Type that echoes the logo.** Marcellus, a flared roman close to the logo's lettering, for labels and nav. Newsreader light for headlines and prices. Hanken Grotesk for reading.
+- **Motifs that are theirs.** The petal-lattice pattern of the carved reception panels (a faint SVG background) and the "line of light" from the slatted ceilings.
+- **Voice.** The hero line "Marigold at the door. Quiet in every room." describes what the photo actually shows. "Wellness, our passion" is their own tagline.
 
-**Why it suits Spa Villa.** It is warm and domestic rather than hotel-generic, it gives the brand something ownable (the plan/sheet motif) and its structure follows the guest's real decisions: time and company → treatment → branch → contact.
+## Key interactions
+1. **Walk-through:** a six-stop horizontal photo tour with keyboard, buttons and progress, ordered as a guest moves through the space.
+2. **Menu by occasion:** on desktop the image changes with hover or focus; on mobile each item has an inline thumbnail. The groups link into pre-filtered treatment results.
+3. **Branch selector:** tabs, a schematic map and the planner all stay in sync. It fixes the swapped phone numbers.
+4. **Visit planner:** writes a ready-to-send WhatsApp message to the right branch. It's the real conversion path for a Nagpur spa, and nothing is stored.
+5. **Treatment finder:** "How long do you have? Who's coming?" filters with shareable URLs, sorting, and a compare modal.
 
-## What is built
-| Page | Sections / interactions |
-|---|---|
-| Home | Concept notice; hero with 3 facts and illustrative plan; menu index by occasion (links pre-filter page 2); Antaara spread with inclusions; two treatments for two; 4-step first visit; ARIA tab branch selector with Maps link; enquiry band — tel, WhatsApp, email, callback form (validation, prefill from any "Ask about this" link, non-transmitting confirmation); footer disclaimer |
-| Treatments | 8 treatments with price, duration, inclusions; filter (5 groups, hash-aware); sort (menu/price/duration); compare up to 3 in a modal table; "before you book" notes; per-treatment enquiry prefill |
-
-## Improvement over the current site
-- Removes template noise (preview banner, placeholder text, irrelevant pop-up, dead booking widget).
-- Prices and durations visible together and comparable; Couple Spa's missing duration is shown honestly.
-- Grouped by occasion rather than platform categories.
-- One phone number, consistently; branches presented as a choice rather than a buried line.
-- A first-visit guide answers the questions first-time guests actually have.
-- Mobile-first: sticky filters, full-width actions, 44px targets.
-
-## Future (paid engagement)
-Authorised photography in the plates; real logo; branch-level hours and availability; a real enquiry/booking integration; gift vouchers if offered; a CMS driven by the treatment data structure (`data-*` attributes already model price, duration and category).
+## How it improves on the current site
+- The live site shows a Boost 360 "preview" banner, Lorem Ipsum offers, a "Hair Color" pop-up, a dead booking widget and a single number for two branches. All of that is gone.
+- Their best assets (the award, the interiors, the logo) were buried in a gallery. Now they lead.
+- Each branch has its own number, hours and directions. A booking request takes about 20 seconds.
+- Prices and durations are visible and comparable. Unknowns are said honestly.

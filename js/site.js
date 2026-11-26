@@ -1,157 +1,178 @@
-/* Spa Villa concept — progressive enhancement only. No data leaves the page. */
+/* Spa Villa concept — progressive enhancement. Nothing on this page sends or stores data. */
 (() => {
   const $ = (s, r = document) => r.querySelector(s);
   const $$ = (s, r = document) => [...r.querySelectorAll(s)];
+  const reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
 
-  // Mobile navigation
-  const toggle = $('.nav-toggle'), nav = $('#nav');
-  if (toggle && nav) {
-    const close = () => { nav.classList.remove('open'); toggle.setAttribute('aria-expanded', 'false'); };
-    toggle.addEventListener('click', () => {
-      const open = nav.classList.toggle('open');
-      toggle.setAttribute('aria-expanded', String(open));
-    });
+  const BRANCHES = {
+    dh: { name: 'Spa Villa, Dharampeth', short: 'Dharampeth', phone: '+91 77210 77210', tel: '+917721077210', wa: '917721077210' },
+    cs: { name: 'Spa Villa, Chhatrapati Square', short: 'Chhatrapati Square', phone: '+91 93706 60101', tel: '+919370660101', wa: '919370660101' }
+  };
+
+  // Header: transparent over the hero, solid once scrolled
+  const header = $('.site-header');
+  const setHdr = () => document.documentElement.style.setProperty('--hdr', header.getBoundingClientRect().bottom + 'px');
+  const onScroll = () => { header.classList.toggle('solid', scrollY > 40); };
+  addEventListener('scroll', onScroll, { passive: true }); onScroll();
+
+  // Mobile nav
+  const btn = $('.menu-btn'), nav = $('#nav');
+  if (btn) {
+    const close = () => { nav.classList.remove('open'); btn.setAttribute('aria-expanded', 'false'); };
+    btn.addEventListener('click', () => { setHdr(); const o = nav.classList.toggle('open'); btn.setAttribute('aria-expanded', String(o)); header.classList.add('solid'); if (o) $('a', nav).focus(); });
     $$('a', nav).forEach(a => a.addEventListener('click', close));
-    document.addEventListener('keydown', e => { if (e.key === 'Escape' && nav.classList.contains('open')) { close(); toggle.focus(); } });
+    addEventListener('keydown', e => { if (e.key === 'Escape' && nav.classList.contains('open')) { close(); btn.focus(); } });
+    addEventListener('resize', () => { if (innerWidth > 820) close(); });
   }
 
-  // Treatment prefill links carry the treatment name to the enquiry form
-  $$('a[data-prefill]').forEach(a => {
-    const base = a.getAttribute('href').split('#')[0] || location.pathname.split('/').pop() || './';
-    a.href = `${base}?treatment=${encodeURIComponent(a.dataset.prefill)}#enquire`;
-  });
+  // Walk-through carousel
+  const track = $('#track');
+  if (track) {
+    const stops = $$('.stop', track), prev = $('#prev'), next = $('#next'), count = $('#count'), bar = $('#bar');
+    const current = () => {
+      const x = track.scrollLeft;
+      let i = 0; stops.forEach((s, k) => { if (s.offsetLeft - track.offsetLeft - 40 <= x) i = k; });
+      if (x + track.clientWidth >= track.scrollWidth - 4) i = stops.length - 1;
+      return i;
+    };
+    const update = () => {
+      const i = current(), n = stops.length;
+      count.textContent = `${String(i + 1).padStart(2, '0')} / ${String(n).padStart(2, '0')}`;
+      bar.style.width = `${((i + 1) / n) * 100}%`;
+      prev.disabled = track.scrollLeft < 4;
+      next.disabled = track.scrollLeft + track.clientWidth >= track.scrollWidth - 4;
+    };
+    const go = d => {
+      const i = Math.max(0, Math.min(stops.length - 1, current() + d));
+      track.scrollTo({ left: stops[i].offsetLeft - track.offsetLeft - parseFloat(getComputedStyle(track).paddingLeft), behavior: reduce ? 'auto' : 'smooth' });
+    };
+    prev.addEventListener('click', () => go(-1)); next.addEventListener('click', () => go(1));
+    track.addEventListener('keydown', e => { if (e.key === 'ArrowRight') { e.preventDefault(); go(1); } if (e.key === 'ArrowLeft') { e.preventDefault(); go(-1); } });
+    let t; track.addEventListener('scroll', () => { clearTimeout(t); t = setTimeout(update, 60); }, { passive: true });
+    addEventListener('resize', update); update();
+  }
 
-  // Branch tabs (WAI-ARIA tabs pattern)
-  const tabs = $$('[role="tab"]');
-  const select = t => {
-    tabs.forEach(x => {
-      const on = x === t;
-      x.setAttribute('aria-selected', String(on));
-      x.tabIndex = on ? 0 : -1;
-      $('#' + x.getAttribute('aria-controls')).hidden = !on;
+  // Menu index: image preview follows hover/focus
+  const occ = $('#occ');
+  if (occ) {
+    const imgs = $$('.preview img');
+    $$('a', occ).forEach(a => {
+      const show = () => { imgs.forEach((im, k) => im.classList.toggle('on', String(k) === a.dataset.img)); $$('a', occ).forEach(x => x.classList.toggle('active', x === a)); };
+      a.addEventListener('mouseenter', show); a.addEventListener('focus', show);
     });
+  }
+
+  // Branch tabs + map pins + planner stay in sync
+  const tabs = $$('[role="tab"][data-b]');
+  const setBranch = (b, fromPlanner) => {
+    tabs.forEach(t => { const on = t.dataset.b === b; t.setAttribute('aria-selected', String(on)); t.tabIndex = on ? 0 : -1; $('#' + t.getAttribute('aria-controls')).hidden = !on; });
+    $$('.citymap .pin').forEach(p => p.classList.toggle('on', p.dataset.b === b));
+    if (!fromPlanner) { const r = $(`#planner input[name=branch][value=${b}]`); if (r) { r.checked = true; buildMsg(); } }
   };
   tabs.forEach((t, i) => {
-    t.addEventListener('click', () => select(t));
+    t.addEventListener('click', () => setBranch(t.dataset.b));
     t.addEventListener('keydown', e => {
-      const k = { ArrowRight: 1, ArrowDown: 1, ArrowLeft: -1, ArrowUp: -1 }[e.key];
-      if (k) { e.preventDefault(); const n = tabs[(i + k + tabs.length) % tabs.length]; select(n); n.focus(); }
+      const d = { ArrowRight: 1, ArrowLeft: -1 }[e.key];
+      if (d) { e.preventDefault(); const n = tabs[(i + d + tabs.length) % tabs.length]; setBranch(n.dataset.b); n.focus(); }
     });
   });
+  $$('.citymap .pin').forEach(p => p.addEventListener('click', () => setBranch(p.dataset.b)));
 
-  // Callback form: validate, then show a local confirmation. Nothing is sent or stored.
-  const form = $('form.callback');
+  // Visit planner: composes a message; the guest sends it themselves
+  const form = $('#planner');
+  function buildMsg() {
+    if (!form) return;
+    const d = new FormData(form);
+    const b = BRANCHES[d.get('branch')];
+    const guests = { '1': 'one person', '2': 'two people', '3+': 'three or more people' }[d.get('guests')];
+    let when = 'a day that suits you';
+    const dateEl = $('#p-date'), err = $('#e-date');
+    if (dateEl.value) {
+      const picked = new Date(dateEl.value + 'T12:00'), today = new Date(); today.setHours(0, 0, 0, 0);
+      if (picked < today) { dateEl.setAttribute('aria-invalid', 'true'); err.textContent = 'Please choose today or a later date.'; }
+      else { dateEl.removeAttribute('aria-invalid'); err.textContent = ''; when = picked.toLocaleDateString('en-IN', { weekday: 'long', day: 'numeric', month: 'long' }); }
+    } else { dateEl.removeAttribute('aria-invalid'); err.textContent = ''; }
+    const name = (d.get('name') || '').trim().replace(/[<>]/g, '');
+    const treat = d.get('treat');
+    const text = `Hello Spa Villa ${b.short},${name ? ` this is ${name}.` : ''}\nI'd like to book ${treat.startsWith('Not sure') ? 'a treatment (please suggest one)' : treat.startsWith('A gift') ? 'a treatment as a gift' : 'the ' + treat} for ${guests}, on ${when}, ${d.get('time').toLowerCase()}.\nIs there a slot available?`;
+    $('#bubble').textContent = text;
+    $('#to-name').textContent = b.name; $('#to-phone').textContent = b.phone;
+    $('#wa').href = `https://wa.me/${b.wa}?text=${encodeURIComponent(text)}`;
+    $('#call').href = `tel:${b.tel}`; $('#call').textContent = `Call ${b.short}`;
+    form.dataset.text = text;
+  }
   if (form) {
-    const q = new URLSearchParams(location.search).get('treatment');
-    if (q) {
-      const sel = $('#f-treat');
-      const match = [...sel.options].find(o => o.text.toLowerCase().replace(/synchroni[sz]ed/, 's') === q.toLowerCase().replace(/synchroni[sz]ed/, 's'));
-      if (match) sel.value = match.value;
-    }
-    const rules = {
-      name: v => v.trim().length >= 2 || 'Please enter your name.',
-      phone: v => /^(?:\+?91[\s-]?|0)?[6-9]\d{4}[\s-]?\d{5}$/.test(v.trim()) || 'Please enter a valid 10-digit Indian mobile number.'
-    };
-    const check = input => {
-      const res = rules[input.name](input.value);
-      const err = $('#e-' + input.name);
-      if (res === true) { input.removeAttribute('aria-invalid'); err.textContent = ''; return true; }
-      input.setAttribute('aria-invalid', 'true'); err.textContent = res; return false;
-    };
-    Object.keys(rules).forEach(n => {
-      const el = form.elements[n];
-      el.addEventListener('blur', e => { if (e.target.value) check(e.target); });
-      // Clear an error as soon as the entry becomes valid, so the layout settles before the user reaches the button
-      el.addEventListener('input', e => { if (e.target.getAttribute('aria-invalid') === 'true') check(e.target); });
+    const dateEl = $('#p-date');
+    const iso = new Date(Date.now() - new Date().getTimezoneOffset() * 6e4).toISOString().slice(0, 10);
+    dateEl.min = iso;
+    const q = new URLSearchParams(location.search).get('t');
+    const pick = name => { const o = [...$('#p-treat').options].find(o => o.text.toLowerCase() === name.toLowerCase()); if (o) $('#p-treat').value = o.value; };
+    if (q) pick(q);
+    $$('[data-treat]').forEach(a => a.addEventListener('click', () => { pick(a.dataset.treat); buildMsg(); }));
+    form.addEventListener('input', buildMsg); form.addEventListener('change', e => { if (e.target.name === 'branch') setBranch(e.target.value, true); buildMsg(); });
+    form.addEventListener('submit', e => e.preventDefault());
+    $('#wa').addEventListener('click', e => { if ($('#p-date').getAttribute('aria-invalid') === 'true') { e.preventDefault(); $('#p-date').focus(); } });
+    $('#copy').addEventListener('click', async () => {
+      const s = $('#status');
+      try { await navigator.clipboard.writeText(form.dataset.text); s.textContent = 'Message copied. Paste it into WhatsApp or SMS.'; }
+      catch { s.textContent = 'Copy isn’t available in this browser. Select the message text and copy it.'; }
     });
-    form.addEventListener('submit', e => {
-      e.preventDefault();
-      const bad = Object.keys(rules).map(n => form.elements[n]).filter(i => !check(i));
-      if (bad.length) { bad[0].focus(); return; }
-      const d = new FormData(form);
-      const box = document.createElement('div');
-      box.className = 'confirm'; box.tabIndex = -1; box.setAttribute('role', 'status');
-      const h = document.createElement('h3'); h.textContent = `Thank you, ${d.get('name').trim().split(' ')[0]}.`;
-      const p1 = document.createElement('p');
-      p1.textContent = `In the live site, the ${d.get('branch') === 'Either' ? 'nearest' : d.get('branch')} team would call you in the ${d.get('when').toLowerCase()} about: ${d.get('treatment')}.`;
-      const p2 = document.createElement('p');
-      p2.innerHTML = '<strong>This is a concept prototype.</strong> Your details were not sent or saved. To reach Spa Villa now, call <a href="tel:+919370660101">+91 93706 60101</a>.';
-      const again = document.createElement('button'); again.type = 'button'; again.className = 'btn ghost'; again.textContent = 'Start again';
-      again.addEventListener('click', () => { form.reset(); box.replaceWith(form); form.elements.name.focus(); });
-      box.append(h, p1, p2, again);
-      form.replaceWith(box); box.focus();
-    });
+    buildMsg();
   }
 
-  // Treatments: filter, sort, compare
-  const menu = $('#menu');
-  if (menu) {
-    const items = $$('.treat', menu);
-    const count = $('#count'), empty = $('#empty');
-    let filter = 'all';
+  // Treatments finder
+  const list = $('#tlist');
+  if (list) {
+    const rows = $$('.tr', list), rc = $('#rc'), none = $('#none');
+    const params = new URLSearchParams(location.search);
+    ['time', 'who'].forEach(k => { const v = params.get(k); const r = v && $(`.finder input[name=${k}][value="${v}"]`); if (r) r.checked = true; });
     const apply = () => {
-      let shown = 0;
-      items.forEach(li => { const on = filter === 'all' || li.dataset.cat === filter; li.hidden = !on; if (on) shown++; });
-      empty.hidden = shown > 0;
-      count.textContent = `${shown} treatment${shown === 1 ? '' : 's'} shown`;
+      const time = $('.finder input[name=time]:checked').value, who = $('.finder input[name=who]:checked').value;
+      let n = 0;
+      rows.forEach(r => {
+        const ok = (time === 'any' || r.dataset.time === time) && (who === 'any' || r.dataset.who === who);
+        r.hidden = !ok; if (ok) n++;
+      });
+      none.hidden = n > 0;
+      rc.textContent = n === rows.length ? `Showing all ${n} treatments` : `${n} of ${rows.length} treatments match`;
+      const u = new URL(location); ['time', 'who'].forEach(k => { const v = $(`.finder input[name=${k}]:checked`).value; v === 'any' ? u.searchParams.delete(k) : u.searchParams.set(k, v); });
+      history.replaceState(null, '', u);
     };
-    $$('[data-filter]').forEach(b => b.addEventListener('click', () => {
-      filter = b.dataset.filter;
-      $$('[data-filter]').forEach(x => x.setAttribute('aria-pressed', String(x === b)));
-      apply();
-    }));
-    const hashMap = { signature: 1, 'for-two': 1, 'full-body': 1, express: 1 };
+    $$('.finder input').forEach(i => i.addEventListener('change', apply));
     $('#sort').addEventListener('change', e => {
-      const v = e.target.value;
-      const num = (li, k) => Number(li.dataset[k]) || 999;
-      const sorted = [...items].sort((a, b) =>
-        v === 'price-asc' ? num(a, 'price') - num(b, 'price') :
-        v === 'price-desc' ? num(b, 'price') - num(a, 'price') :
-        v === 'dur-asc' ? num(a, 'dur') - num(b, 'dur') || num(a, 'price') - num(b, 'price') :
-        num(a, 'order') - num(b, 'order'));
-      sorted.forEach(li => menu.appendChild(li));
+      const v = e.target.value, p = r => +r.dataset.price;
+      [...rows].sort((a, b) => v === 'lo' ? p(a) - p(b) : v === 'hi' ? p(b) - p(a) : a.dataset.o - b.dataset.o).forEach(r => list.appendChild(r));
     });
+    apply();
 
-    const tray = $('#tray'), dlg = $('#compare');
-    const boxes = $$('[data-compare]');
-    const picked = () => boxes.filter(b => b.checked).map(b => b.closest('.treat'));
+    const boxes = $$('[data-cmp]'), bar = $('#traybar'), dlg = $('#cmp');
+    const chosen = () => boxes.filter(b => b.checked).map(b => b.closest('.tr'));
     const sync = () => {
-      const n = picked().length;
-      tray.hidden = n === 0;
-      $('#tray-count').textContent = `${n} of 3 selected`;
-      $('#open-compare').disabled = n < 2;
+      const n = chosen().length; bar.hidden = n === 0;
+      $('#trayn').textContent = n < 2 ? `${n} selected, pick ${2 - n} more` : `${n} of 3 selected`;
+      $('#opencmp').disabled = n < 2;
       boxes.forEach(b => { b.disabled = !b.checked && n >= 3; });
     };
     boxes.forEach(b => b.addEventListener('change', sync));
-    $('#clear-compare').addEventListener('click', () => { boxes.forEach(b => { b.checked = false; }); sync(); });
-    $('#open-compare').addEventListener('click', () => {
-      const rows = picked();
-      const cell = (li, sel) => li.querySelector(sel)?.textContent.trim() || '—';
-      const t = document.createElement('table'); t.className = 'cmp';
-      const head = '<thead><tr><th scope="col"><span class="visually-hidden">Attribute</span></th>' + rows.map(li => `<th scope="col">${li.querySelector('h2').innerHTML}</th>`).join('') + '</tr></thead>';
-      const line = (label, fn) => `<tr><th scope="row">${label}</th>${rows.map(li => `<td>${fn(li)}</td>`).join('')}</tr>`;
-      t.innerHTML = head + '<tbody>' +
-        line('Price', li => cell(li, '.price')) +
-        line('Duration', li => cell(li, '.dur')) +
-        line('Type', li => cell(li, '.cat')) +
-        line('Includes', li => $$('.facts li', li).map(x => x.innerHTML).join(', ')) +
-        '</tbody>';
-      const body = $('#cmp-body'); body.replaceChildren(t);
+    $('#clearcmp').addEventListener('click', () => { boxes.forEach(b => { b.checked = false; }); sync(); });
+    $('#opencmp').addEventListener('click', () => {
+      const rs = chosen(), esc = s => s.replace(/[&<>]/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;' }[c]));
+      const txt = (r, s) => esc(r.querySelector(s)?.textContent.trim() || '—');
+      const row = (h, f) => `<tr><th scope="row">${h}</th>${rs.map(r => `<td>${f(r)}</td>`).join('')}</tr>`;
+      $('#cmpbody').innerHTML = `<table class="ct"><thead><tr><td></td>${rs.map(r => `<th scope="col">${txt(r, 'h2')}</th>`).join('')}</tr></thead><tbody>` +
+        row('Price', r => txt(r, '.price')) + row('Time', r => txt(r, '.dur')) + row('Type', r => txt(r, '.kind')) +
+        row('Includes', r => $$('.chips li', r).map(li => esc(li.textContent)).join(', ')) + '</tbody></table>';
       dlg.showModal();
     });
-    $('#close-compare').addEventListener('click', () => dlg.close());
+    $('#closecmp').addEventListener('click', () => dlg.close());
     dlg.addEventListener('click', e => { if (e.target === dlg) dlg.close(); });
-    apply(); sync();
-
-    // Category anchors from the homepage pre-select the matching filter
-    const fromHash = location.hash.slice(1);
-    if (hashMap[fromHash]) $(`[data-filter="${fromHash}"]`)?.click();
+    sync();
   }
 
-  // Gentle reveal
-  const rv = $$('.reveal');
-  if ('IntersectionObserver' in window && !matchMedia('(prefers-reduced-motion: reduce)').matches) {
-    const io = new IntersectionObserver(es => es.forEach(e => { if (e.isIntersecting) { e.target.classList.add('in'); io.unobserve(e.target); } }), { rootMargin: '0px 0px -10% 0px' });
+  // Reveal on scroll
+  const rv = $$('.rv');
+  if ('IntersectionObserver' in window && !reduce) {
+    const io = new IntersectionObserver(es => es.forEach(e => { if (e.isIntersecting) { e.target.classList.add('in'); io.unobserve(e.target); } }), { rootMargin: '0px 0px -8% 0px' });
     rv.forEach(el => io.observe(el));
   } else rv.forEach(el => el.classList.add('in'));
 })();

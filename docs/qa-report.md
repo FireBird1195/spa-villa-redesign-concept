@@ -1,19 +1,25 @@
-# QA report — Nov 26, 2026 (local, Chromium via Playwright, python http.server)
+# QA report, iteration 2 (Nov 26, 2026)
 
-| Check | Result | Evidence |
-|---|---|---|
-| Layout at 375×812, 768×1024, 1440×900, both pages | PASS — no horizontal overflow (scrollWidth − innerWidth = 0) | `qa/screens/*.png` (not committed) |
-| Console errors, page errors, 4xx/5xx assets | PASS — none at all 6 page/viewport combinations | Playwright listeners |
-| Internal links and anchors | PASS — all 16 internal targets exist | grep + manual mapping |
-| External links (official site, Facebook, Maps, wa.me) | Partly checked — the official site was fetched; the Facebook URL is the one the site publishes; Maps and wa.me were not opened | — |
-| Filter (hash-aware), sort, compare (max 3, modal) | PASS | `#for-two` shows 2 items; price sort ascending is correct; 4th checkbox disabled; table has 4 columns |
-| Form: empty / invalid phone / valid / prefill | PASS | Errors shown; confirmation clearly says nothing was sent; `?treatment=Couple spa` preselects |
-| **Bug found and fixed:** a validation message disappeared on blur, the layout shifted and the submit click was lost | FIXED — errors now clear on input | Retested |
-| Mobile nav toggle, Esc to close; branch tabs with arrow keys | PASS | — |
-| axe-core (WCAG 2 A/AA + best practice) at 375 and 1440 | PASS after fixes (contrast on the "pending" label, landmark for the concept bar, wordmark accessible name). One remaining report only appears mid-fade (reveal animation) | — |
-| prefers-reduced-motion | Implemented (CSS disables transitions/reveal); not emulated in a test | NOT_RUN |
-| noindex | PASS — meta robots on both pages, `X-Robots-Tag` in `_headers`, robots.txt Disallow | — |
-| Weight | ~384 KB total incl. fonts; no images; 1 JS file (~6 KB) | — |
-| Lighthouse, real devices, Safari/Firefox, deployed URL, CSP on Cloudflare | NOT_RUN | Needs deployment approval / devices |
+Environment: local static server, Chromium (Playwright), axe-core 4.
 
-**Limitations:** no authentic photography (plates are placeholders); the second branch has incomplete data by design; no independent QA agent run (single-session build, so the builder self-tested). Content accuracy is covered in `verification.md`.
+| Check | Result |
+|---|---|
+| Layout at 375, 768 and 1440 px, both pages: horizontal overflow | PASS (0 px) after fixing the lattice ornament overflow (was 96 px) |
+| Console and page errors, failed requests, broken images | PASS: none |
+| axe (WCAG 2 A/AA + best practice) at 375 and 1440 | PASS after darkening the marigold label colour (was 4.3:1 on stone) |
+| Treatment finder: `?who=two` gives 2 results; 30 min + two gives the empty state; the URL updates | PASS |
+| Sort by price, high to low | PASS (5500 … 1799) |
+| Compare: the 4th box is disabled at 3; the modal renders a table | PASS |
+| "Plan this visit" opens the planner with the treatment preselected | PASS |
+| Planner: switching branch syncs tabs and map, and the WhatsApp link targets that branch's number; a past date is rejected; message text is correct | PASS |
+| Branch tabs: switching back syncs the planner | PASS |
+| Walk-through: next button, counter, keyboard arrows | PASS (buttons and counter tested; arrow keys implemented, not automated) |
+| Mobile nav opens and Esc closes | PASS |
+| Viewport review of hero, walk-through, branches, planner, footer and treatments | Done. Fixed: duplicate photo in the menu, mobile menu thumbnail alignment, walk-through dead space on mobile, faint line on the logo |
+| noindex meta, `X-Robots-Tag`, robots.txt | Present |
+| Weight | Hero WebP ~130–260 KB per breakpoint. Total photos ~1.9 MB across all sizes and formats (a page loads one size). JS ~9 KB, no dependencies |
+| Reduced motion | Implemented in CSS and JS; not emulated in tests (NOT_RUN) |
+| Lighthouse, Safari/iOS, real devices, deployed URL, `_headers` on Cloudflare | NOT_RUN |
+| Independent QA agent | NOT_RUN: built and tested in one session |
+
+Known limitations: the photos are browser captures of web-sized originals, so some (320 px gallery images) are only usable small. Chhatrapati Square address and hours need confirmation (shown with a "To confirm" tag).
